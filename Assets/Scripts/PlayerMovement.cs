@@ -19,6 +19,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] LifeUI lifeUI;
     [SerializeField] GameObject gameOverPanel;
 
+    [SerializeField] AudioSource jumpSound;
+    [SerializeField] AudioSource deathSound;
+    [SerializeField] AudioSource gameOverSound;
+
     public int score = 0;
 
     bool isGrounded = false;
@@ -40,6 +44,11 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpForce);
+
+            if (jumpSound != null && jumpSound.clip != null)
+            {
+                jumpSound.PlayOneShot(jumpSound.clip);
+            }
         }
 
         if (horizontalMovement > 0f && !faceRight)
@@ -106,6 +115,11 @@ public class PlayerMovement : MonoBehaviour
     {
         isRespawning = true;
 
+        if (deathSound != null && deathSound.clip != null)
+        {
+            deathSound.PlayOneShot(deathSound.clip);
+        }
+
         LoseLife();
 
         if (lives <= 0)
@@ -160,6 +174,11 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator GameOver()
     {
+        if (gameOverSound != null && gameOverSound.clip != null)
+        {
+            gameOverSound.PlayOneShot(gameOverSound.clip);
+        }
+
         gameOverPanel.SetActive(true);
 
         yield return new WaitForSecondsRealtime(3f);

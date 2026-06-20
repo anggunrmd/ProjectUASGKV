@@ -1,8 +1,9 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LifeUI : MonoBehaviour
 {
-    public SpriteRenderer[] mushrooms;
+    [SerializeField] Image[] mushrooms;
 
     public void UpdateLives(int lives)
     {
